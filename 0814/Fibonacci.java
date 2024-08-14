@@ -52,6 +52,32 @@ public class Fibonacci {
 
         return result;
     }
+    
+    public int iteration2(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        if (n == 0) {
+            return 0;
+        } 
+
+        if (n == 1) {
+            return 1;
+        }
+
+        int result = 0;
+        int first = 0;
+        int second = 1;
+
+        for (int i=2; i<=n; i++) {
+            result = first + second;
+            second = first;
+            first = result;
+        }
+
+        return result;
+    }
 
     public static void main(String[] args) {
         int[] answer = {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377};
