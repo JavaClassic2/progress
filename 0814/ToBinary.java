@@ -18,9 +18,17 @@ public class ToBinary {
         return toBinary(n/2, n%2 + res);
     }
 
+    public static String toBinary2(int n) {
+        if (n == 0) {
+            return "0";
+        }
+
+        return toBinary2(n/2) + toBinary(n%2);
+    } 
+
     public static void main(String[] args) {
         for (int i=0; i<10; i++){
-            System.out.printf("%d to binary : %s%n", i, toBinary(i));
+            System.out.printf("%d to binary : %s%n", i, toBinary2(i));
         }
     }
 }
