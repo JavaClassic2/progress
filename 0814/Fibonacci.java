@@ -1,6 +1,4 @@
-import java.lang.module.FindException;
-
-public class Fibonachi {
+public class Fibonacci {
     public int recursion(int n) {
         if (n == 0) {
             return 0;
@@ -54,7 +52,7 @@ public class Fibonachi {
     public static void main(String[] args) {
         int[] answer = {0, 1, 1, 2, 3, 5, 8, 13};
 
-        Fibonachi fibonachi = new Fibonachi();
+        Fibonacci fibonachi = new Fibonacci();
         
         System.out.println("===== recursion test =====");
         for (int i=0; i<answer.length; i++) {
