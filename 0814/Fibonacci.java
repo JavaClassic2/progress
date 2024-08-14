@@ -1,5 +1,9 @@
 public class Fibonacci {
     public int recursion(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException();
+        }
+
         if (n == 0) {
             return 0;
         }
@@ -50,7 +54,7 @@ public class Fibonacci {
     }
 
     public static void main(String[] args) {
-        int[] answer = {0, 1, 1, 2, 3, 5, 8, 13};
+        int[] answer = {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377};
 
         Fibonacci fibonachi = new Fibonacci();
         
