@@ -45,6 +45,10 @@ public class World extends JPanel{
         return ballList.get(index);
     }
 
+    public List<Ball> getBallList() {
+        return ballList;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
