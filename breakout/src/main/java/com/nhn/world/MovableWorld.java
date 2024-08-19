@@ -42,7 +42,11 @@ public class MovableWorld extends World{
         moveCount = 0;
     }
 
-    private void move() {
+    public void plusMoveCount(){
+        moveCount++;
+    }
+
+    public void move() {
         for (Ball ball : getBallList()) {
             if (ball instanceof MovableBall) {
                 ((MovableBall)ball).move();
@@ -58,7 +62,7 @@ public class MovableWorld extends World{
             try {
                 Thread.sleep(getDt());
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }
