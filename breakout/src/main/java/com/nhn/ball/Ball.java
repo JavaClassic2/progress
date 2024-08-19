@@ -1,4 +1,4 @@
-package com.nhn;
+package com.nhn.ball;
 
 import com.nhn.exception.OutOfRangeException;
 

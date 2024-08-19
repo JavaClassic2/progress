@@ -1,8 +1,9 @@
-package com.nhn;
 
+
+import com.nhn.ball.Ball;
 import com.nhn.exception.OutOfRangeException;
 
-public class Main {
+public class BallTest {
     public static void main(String[] args) {
         creationTest();
     }
