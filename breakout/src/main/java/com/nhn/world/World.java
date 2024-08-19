@@ -18,6 +18,7 @@ public class World extends JPanel{
 
     public void add(Ball ball) {
         ballList.add(ball);
+        System.out.println("ball added world : " + ball);
         repaint();
     }
     
