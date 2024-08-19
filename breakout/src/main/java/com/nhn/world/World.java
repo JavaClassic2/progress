@@ -45,8 +45,17 @@ public class World extends JPanel{
 
         for (Ball ball : ballList) {
             if (ball instanceof PaintableBall) {
-                ((PaintableBall)ball).paint(g);
+                if (isPaintable((PaintableBall)ball)){
+                    ((PaintableBall)ball).paint(g);
+                } else {
+                    System.out.println("world의 영역에 속하지 않음");
+                }
             }
         }
+    }
+
+    private boolean isPaintable(PaintableBall ball) {
+        return ball.getX() - ball.getRadius() >= 0 && ball.getY() - ball.getRadius() >= 0
+                && ball.getX() + ball.getRadius() <= getWidth() && ball.getY() + ball.getRadius() <= getHeight(); 
     }
 }
