@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import com.nhn.ball.PaintableBall;
+import com.nhn.exception.OutOfBoundsException;
 import com.nhn.world.World;
 
 public class PaintableBallTest{
@@ -29,9 +30,20 @@ public class PaintableBallTest{
     }
 
     private static void addBall(World world) {
-        for (int i=0; i<BALL_COUNT; i++) {
-            PaintableBall ball = new PaintableBall(random.nextInt(FRAME_WIDTH)+1, random.nextInt(FRAME_HEIGHT)+1, random.nextInt(MAX_RADIUS-MIN_RADIUS)+MIN_RADIUS, colors[random.nextInt(colors.length)]);
-            world.add(ball);
+        System.out.println(world.getSize());
+        while(world.getCount() < BALL_COUNT) {
+            try {
+                world.add(
+                    new PaintableBall(
+                        random.nextInt(FRAME_WIDTH)+1, 
+                        random.nextInt(FRAME_HEIGHT)+1, 
+                        random.nextInt(MAX_RADIUS-MIN_RADIUS)+MIN_RADIUS, 
+                        colors[random.nextInt(colors.length)]
+                    )
+                );
+            } catch (OutOfBoundsException e) {
+                addBall(world);
+            }
         }
     }
 }
