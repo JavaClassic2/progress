@@ -6,56 +6,56 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import com.nhn.ball.PaintableBall;
 import com.nhn.exception.OutOfBoundsException;
+import com.nhn.object.Paintable;
 import com.nhn.object.Regionable;
 
 public class World extends JPanel{
-    private List<Regionable> boundedList;
+    private List<Regionable> RegionableList;
 
     public World() {
-        boundedList = new ArrayList<>();
+        RegionableList = new ArrayList<>();
     }
 
-    public void add(Regionable ball) {
-        if (isOutOfBounds(ball)) {
+    public void add(Regionable regionable) {
+        if (isOutOfBounds(regionable)) {
             throw new OutOfBoundsException();
         }
 
-        boundedList.add(ball);
-        System.out.println("ball added world : " + ball);
+        RegionableList.add(regionable);
+        System.out.println("ball added world : " + regionable);
         repaint();
     }
     
-    public void remove(Regionable ball) {
-        boundedList.remove(ball);
+    public void remove(Regionable regionable) {
+        RegionableList.remove(regionable);
         repaint();
     }
     
     public void remove(int index) {
-        boundedList.remove(index);
+        RegionableList.remove(index);
         repaint();
     }
     
     public int getCount() {
-        return boundedList.size();
+        return RegionableList.size();
     }
     
     public Regionable get(int index) {
-        return boundedList.get(index);
+        return RegionableList.get(index);
     }
 
-    public List<Regionable> getBoundedList() {
-        return boundedList;
+    public List<Regionable> getRegionableList() {
+        return RegionableList;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        for (Regionable b : boundedList) {
-            if (b instanceof PaintableBall) {
-                ((PaintableBall)b).paint(g);
+        for (Regionable regionable : RegionableList) {
+            if (regionable instanceof Paintable) {
+                ((Paintable)regionable).paint(g);
             }
         }
     }

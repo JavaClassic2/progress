@@ -47,9 +47,9 @@ public class MovableWorld extends World{
     }
 
     public void move() {
-        for (Regionable bounded : getBoundedList()) {
-            if (bounded instanceof Movable) {
-                ((Movable)bounded).move();
+        for (Regionable regionable : getRegionableList()) {
+            if (regionable instanceof Movable) {
+                ((Movable)regionable).move();
             }
         }
         moveCount++;

@@ -16,79 +16,79 @@ public class BoundedWorld extends MovableWorld{
     }
 
     @Override
-    public void add(Regionable ball) {
-        for (Regionable b : getBoundedList()) {
-            if (b.getBounds().intersects(ball.getBounds())) {
+    public void add(Regionable regionable) {
+        for (Regionable r : getRegionableList()) {
+            if (r.getBounds().intersects(regionable.getBounds())) {
                 throw new OutOfBoundsException();
             }
         }
 
-        super.add(ball);
+        super.add(regionable);
     }
 
     @Override
     public void move(){
-        List<Regionable> boundedList = getBoundedList();
-        for (int i=0; i<boundedList.size(); i++) {
-            if (boundedList.get(i) instanceof Movable){
-                Movable b1 = (Movable)boundedList.get(i);
-                checkOutOfbounds(b1);
+        List<Regionable> regionableList = getRegionableList();
+        for (int i=0; i<regionableList.size(); i++) {
+            if (regionableList.get(i) instanceof Movable){
+                Movable m1 = (Movable)regionableList.get(i);
+                checkOutOfbounds(m1);
                     
-                b1.move();
+                m1.move();
                 plusMoveCount();
                 repaint();
                 
-                for (int j = i+1; j<boundedList.size(); j++) {
-                    if (boundedList.get(j) instanceof Movable){
-                        Movable b2 = (Movable)boundedList.get(j);
-                        checkCollision(b1, b2);
+                for (int j = i+1; j<regionableList.size(); j++) {
+                    if (regionableList.get(j) instanceof Movable){
+                        Movable m2 = (Movable)regionableList.get(j);
+                        checkCollision(m1, m2);
                     }
                 }
             }
         }
     }
 
-    private void checkCollision(Movable b1, Movable b2) {
-        if (b1.getBounds().intersects(b2.getBounds())){
-            if (b2.getMinX() < b1.getMinX()  && b1.getMinX() < b2.getMaxX()
-                || b2.getMinX() < b1.getMaxX() && b1.getMaxX() < b2.getMaxX()) {
-                b2.setDx(-b2.getDx());
-                b1.setDx(-b1.getDx());
+    private void checkCollision(Movable m1, Movable m2) {
+        if (m1.getBounds().intersects(m2.getBounds())){
+            if (m2.getMinX() < m1.getMinX()  && m1.getMinX() < m2.getMaxX()
+                || m2.getMinX() < m1.getMaxX() && m1.getMaxX() < m2.getMaxX()) {
+                m2.setDx(-m2.getDx());
+                m1.setDx(-m1.getDx());
             }
     
-            if (b2.getMaxY() > b1.getMinY() && b1.getMinY() > b2.getMinY()
-                || b2.getMaxY() > b1.getMaxY() && b1.getMaxY() > b2.getMinY()) {
-                b2.setDy(-b2.getDy());
-                b1.setDy(-b1.getDy());
+            if (m2.getMaxY() > m1.getMinY() && m1.getMinY() > m2.getMinY()
+                || m2.getMaxY() > m1.getMaxY() && m1.getMaxY() > m2.getMinY()) {
+                m2.setDy(-m2.getDy());
+                m1.setDy(-m1.getDy());
             }
 
-            b1.move();
+            m1.move();
             plusMoveCount();
-            b2.move();
+            m2.move();
             plusMoveCount();
             repaint();
         }
     }
 
-    private void checkOutOfbounds(Movable b1) {
-        if (b1.getMinX() < getBounds().getMinX()) {
-            b1.setDx(-b1.getDx());
-            b1.moveTo((int)getBounds().getMinX() + b1.getWidth()/2, b1.getY());
+    private void checkOutOfbounds(Movable m) {
+        if (m.getMinX() < getBounds().getMinX()) {
+            m.setDx(-m.getDx());
+            m.moveTo((int)getBounds().getMinX() + m.getWidth()/2, m.getY());
         }
         
-        if ( b1.getMaxX() > getBounds().getMaxX()) {
-            b1.setDx(-b1.getDx());
-            b1.moveTo((int)getBounds().getMaxX() - b1.getWidth()/2, b1.getY());
+        if ( m.getMaxX() > getBounds().getMaxX()) {
+            m.setDx(-m.getDx());
+            m.moveTo((int)getBounds().getMaxX() - m.getWidth()/2, m.getY());
         }
 
-        if (b1.getMinY() < getBounds().getMinY()){
-            b1.setDy(-b1.getDy());
-            b1.moveTo(b1.getX(), (int)getBounds().getMinY() + b1.getHeight());
+        if (m.getMinY() < getBounds().getMinY()){
+            m.setDy(-m.getDy());
+            m.moveTo(m.getX(), (int)getBounds().getMinY() + m.getHeight());
         }
         
-        if (b1.getMaxY() > getBounds().getMaxY()) {
-            b1.setDy(-b1.getDy());
-            b1.moveTo(b1.getX(), (int)getBounds().getMaxY() - b1.getHeight());
+        if (m.getMaxY() > getBounds().getMaxY()) {
+            m.setDy(-m.getDy());
+            m.moveTo(m.getX(), (int)getBounds().getMaxY() - m.getHeight());
         }   
     }
 
