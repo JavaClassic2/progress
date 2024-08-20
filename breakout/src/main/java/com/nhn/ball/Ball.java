@@ -3,8 +3,9 @@ package com.nhn.ball;
 import java.awt.Rectangle;
 
 import com.nhn.exception.OutOfRangeException;
+import com.nhn.object.Regionable;
 
-public class Ball {
+public class Ball implements Regionable{
     private int x;
     private int y;
     private int radius;

@@ -2,7 +2,9 @@ package com.nhn.ball;
 
 import java.awt.Color;
 
-public class MovableBall extends PaintableBall{
+import com.nhn.object.Movable;
+
+public class MovableBall extends PaintableBall implements Movable{
     private static final int DEFAULT_DIFFERENTIAL = 10;
     private int dx;
     private int dy;

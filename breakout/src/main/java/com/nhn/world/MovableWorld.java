@@ -1,7 +1,7 @@
 package com.nhn.world;
 
-import com.nhn.ball.Ball;
-import com.nhn.ball.MovableBall;
+import com.nhn.object.Regionable;
+import com.nhn.object.Movable;
 
 public class MovableWorld extends World{
     private int maxMoveCount;
@@ -47,9 +47,9 @@ public class MovableWorld extends World{
     }
 
     public void move() {
-        for (Ball ball : getBallList()) {
-            if (ball instanceof MovableBall) {
-                ((MovableBall)ball).move();
+        for (Regionable bounded : getBoundedList()) {
+            if (bounded instanceof Movable) {
+                ((Movable)bounded).move();
             }
         }
         moveCount++;

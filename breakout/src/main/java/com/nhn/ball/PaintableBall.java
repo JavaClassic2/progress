@@ -2,7 +2,9 @@ package com.nhn.ball;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class PaintableBall extends Ball {
+import com.nhn.object.Paintable;
+
+public class PaintableBall extends Ball implements Paintable{
     public static final Color DEFAULT_COLOR = Color.PINK;
     private Color color;
 

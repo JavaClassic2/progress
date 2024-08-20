@@ -2,9 +2,9 @@ package com.nhn.world;
 
 import java.util.List;
 
-import com.nhn.ball.Ball;
-import com.nhn.ball.MovableBall;
 import com.nhn.exception.OutOfBoundsException;
+import com.nhn.object.Regionable;
+import com.nhn.object.Movable;
 
 public class BoundedWorld extends MovableWorld{
     public BoundedWorld(){
@@ -16,8 +16,8 @@ public class BoundedWorld extends MovableWorld{
     }
 
     @Override
-    public void add(Ball ball) {
-        for (Ball b : getBallList()) {
+    public void add(Regionable ball) {
+        for (Regionable b : getBoundedList()) {
             if (b.getBounds().intersects(ball.getBounds())) {
                 throw new OutOfBoundsException();
             }
@@ -28,18 +28,19 @@ public class BoundedWorld extends MovableWorld{
 
     @Override
     public void move(){
-        List<Ball> ballList = getBallList();
-        for (int i=0; i<ballList.size(); i++) {
-            if (ballList.get(i) instanceof MovableBall){
-                MovableBall b1 = (MovableBall)ballList.get(i);
+        List<Regionable> boundedList = getBoundedList();
+        for (int i=0; i<boundedList.size(); i++) {
+            if (boundedList.get(i) instanceof Movable){
+                Movable b1 = (Movable)boundedList.get(i);
                 checkOutOfbounds(b1);
+                    
                 b1.move();
                 plusMoveCount();
                 repaint();
-
-                for (int j = i+1; j<ballList.size(); j++) {
-                    if (ballList.get(j) instanceof MovableBall) {
-                        MovableBall b2 = (MovableBall)ballList.get(j);
+                
+                for (int j = i+1; j<boundedList.size(); j++) {
+                    if (boundedList.get(j) instanceof Movable){
+                        Movable b2 = (Movable)boundedList.get(j);
                         checkCollision(b1, b2);
                     }
                 }
@@ -47,7 +48,7 @@ public class BoundedWorld extends MovableWorld{
         }
     }
 
-    private void checkCollision(MovableBall b1, MovableBall b2) {
+    private void checkCollision(Movable b1, Movable b2) {
         if (b1.getBounds().intersects(b2.getBounds())){
             if (b2.getMinX() < b1.getMinX()  && b1.getMinX() < b2.getMaxX()
                 || b2.getMinX() < b1.getMaxX() && b1.getMaxX() < b2.getMaxX()) {
@@ -60,28 +61,34 @@ public class BoundedWorld extends MovableWorld{
                 b2.setDy(-b2.getDy());
                 b1.setDy(-b1.getDy());
             }
+
+            b1.move();
+            plusMoveCount();
+            b2.move();
+            plusMoveCount();
+            repaint();
         }
     }
 
-    private void checkOutOfbounds(MovableBall b1) {
+    private void checkOutOfbounds(Movable b1) {
         if (b1.getMinX() < getBounds().getMinX()) {
             b1.setDx(-b1.getDx());
-            b1.moveTo((int)getBounds().getMinX() + b1.getRadius(), b1.getY());
+            b1.moveTo((int)getBounds().getMinX() + b1.getWidth()/2, b1.getY());
         }
         
         if ( b1.getMaxX() > getBounds().getMaxX()) {
             b1.setDx(-b1.getDx());
-            b1.moveTo((int)getBounds().getMaxX() - b1.getRadius(), b1.getY());
+            b1.moveTo((int)getBounds().getMaxX() - b1.getWidth()/2, b1.getY());
         }
 
         if (b1.getMinY() < getBounds().getMinY()){
             b1.setDy(-b1.getDy());
-            b1.moveTo(b1.getX(), (int)getBounds().getMinY() + b1.getRadius());
+            b1.moveTo(b1.getX(), (int)getBounds().getMinY() + b1.getHeight());
         }
         
         if (b1.getMaxY() > getBounds().getMaxY()) {
             b1.setDy(-b1.getDy());
-            b1.moveTo(b1.getX(), (int)getBounds().getMaxY() - b1.getRadius());
+            b1.moveTo(b1.getX(), (int)getBounds().getMaxY() - b1.getHeight());
         }   
     }
 

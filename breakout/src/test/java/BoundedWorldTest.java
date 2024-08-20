@@ -33,7 +33,6 @@ public class BoundedWorldTest{
     }
 
     private static void addBall(World world) {
-        System.out.println(world.getSize());
         while(world.getCount() < BALL_COUNT) {
             try {
                 world.add(
@@ -42,7 +41,7 @@ public class BoundedWorldTest{
                         random.nextInt(FRAME_HEIGHT)+1, 
                         random.nextInt(MAX_RADIUS-MIN_RADIUS)+MIN_RADIUS, 
                         colors[random.nextInt(colors.length)],
-                        1, 1
+                        random.nextInt(5)+1, random.nextInt(5)+1
                     )
                 );
             } catch (OutOfBoundsException e) {

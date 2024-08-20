@@ -6,62 +6,62 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import com.nhn.ball.Ball;
 import com.nhn.ball.PaintableBall;
 import com.nhn.exception.OutOfBoundsException;
+import com.nhn.object.Regionable;
 
 public class World extends JPanel{
-    private List<Ball> ballList;
+    private List<Regionable> boundedList;
 
     public World() {
-        ballList = new ArrayList<>();
+        boundedList = new ArrayList<>();
     }
 
-    public void add(Ball ball) {
+    public void add(Regionable ball) {
         if (isOutOfBounds(ball)) {
             throw new OutOfBoundsException();
         }
 
-        ballList.add(ball);
+        boundedList.add(ball);
         System.out.println("ball added world : " + ball);
         repaint();
     }
     
-    public void remove(Ball ball) {
-        ballList.remove(ball);
+    public void remove(Regionable ball) {
+        boundedList.remove(ball);
         repaint();
     }
     
     public void remove(int index) {
-        ballList.remove(index);
+        boundedList.remove(index);
         repaint();
     }
     
     public int getCount() {
-        return ballList.size();
+        return boundedList.size();
     }
     
-    public Ball get(int index) {
-        return ballList.get(index);
+    public Regionable get(int index) {
+        return boundedList.get(index);
     }
 
-    public List<Ball> getBallList() {
-        return ballList;
+    public List<Regionable> getBoundedList() {
+        return boundedList;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        for (Ball ball : ballList) {
-            if (ball instanceof PaintableBall) {
-                ((PaintableBall)ball).paint(g);
+        for (Regionable b : boundedList) {
+            if (b instanceof PaintableBall) {
+                ((PaintableBall)b).paint(g);
             }
         }
     }
 
-    private boolean isOutOfBounds(Ball ball) {
-        return ball.getX() - ball.getRadius() < 0 || ball.getY() - ball.getRadius() < 0
-                || ball.getX() + ball.getRadius() > getWidth() || ball.getY() + ball.getRadius() > getHeight(); 
+    private boolean isOutOfBounds(Regionable bounded) {
+        return bounded.getMinX() < 0 || bounded.getMinY() < 0
+                || bounded.getMaxX() > getWidth() || bounded.getMaxY() > getHeight(); 
     }
 }
