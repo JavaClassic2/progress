@@ -42,7 +42,7 @@ public class MovableBall extends PaintableBall{
     }
 
     public void move() {
-        moveTo(getX() + getDx(), getX() + getDy());
+        moveTo(getX() + getDx(), getY() + getDy());
     }
 
     public void moveTo(int x, int y) {

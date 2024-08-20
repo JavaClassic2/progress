@@ -13,7 +13,7 @@ public class BoundedWorldTest{
     static Random random = new Random();
     static final int FRAME_WIDTH = 400;
     static final int FRAME_HEIGHT = 300;
-    static final int BALL_COUNT = 1;
+    static final int BALL_COUNT = 5;
     static final int MIN_RADIUS = 10;
     static final int MAX_RADIUS = 50;
     static final Color[] colors = {Color.BLUE, Color.RED, Color.WHITE, Color.BLACK, Color.GREEN};
@@ -27,8 +27,7 @@ public class BoundedWorldTest{
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
-        world.add(new MovableBall(100, 100, 10, Color.PINK, 1, 1));
-        world.add(new MovableBall(200, 200, 30, Color.PINK, 1, 1));
+        addBall(world);
 
         world.run();
     }

@@ -1,5 +1,7 @@
 package com.nhn.ball;
 
+import java.awt.Rectangle;
+
 import com.nhn.exception.OutOfRangeException;
 
 public class Ball {
@@ -40,6 +42,34 @@ public class Ball {
 
     public int getRadius() {
         return radius;
+    }
+
+    public int getMinX() {
+        return getX() - getRadius();
+    }
+
+    public int getMinY() {
+        return getY() - getRadius();
+    }
+
+    public int getMaxX() {
+        return getX() + getRadius();
+    }
+
+    public int getMaxY() {
+        return getY() + getRadius();
+    }
+
+    public int getWidth() {
+        return 2 * getRadius();
+    }
+
+    public int getHeight() {
+        return 2 * getRadius();
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(getMinX(), getMinY(), getWidth(), getHeight());
     }
 
     @Override
