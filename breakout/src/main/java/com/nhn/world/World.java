@@ -23,7 +23,7 @@ public class World extends JPanel{
         }
 
         RegionableList.add(regionable);
-        System.out.println("ball added world : " + regionable);
+        System.out.println(regionable.getClass().getName() +" added world : " + regionable);
         repaint();
     }
     

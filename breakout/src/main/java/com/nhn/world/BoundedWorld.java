@@ -1,16 +1,20 @@
 package com.nhn.world;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nhn.exception.OutOfBoundsException;
 import com.nhn.object.Regionable;
+import com.nhn.object.Breakable;
 import com.nhn.object.Movable;
 
 public class BoundedWorld extends MovableWorld{
+    private List<Regionable> breakList;
+
     public BoundedWorld(){
         super();
     }
-
+    
     public BoundedWorld(int maxMoveCount, int dt) {
         super(maxMoveCount, dt);
     }
@@ -29,6 +33,8 @@ public class BoundedWorld extends MovableWorld{
     @Override
     public void move(){
         List<Regionable> regionableList = getRegionableList();
+        breakList = new ArrayList<>();
+        
         for (int i=0; i<regionableList.size(); i++) {
             if (regionableList.get(i) instanceof Movable){
                 Movable m1 = (Movable)regionableList.get(i);
@@ -39,33 +45,50 @@ public class BoundedWorld extends MovableWorld{
                 repaint();
                 
                 for (int j = i+1; j<regionableList.size(); j++) {
-                    if (regionableList.get(j) instanceof Movable){
-                        Movable m2 = (Movable)regionableList.get(j);
-                        checkCollision(m1, m2);
-                    }
+                    Regionable m2 = regionableList.get(j);
+                    checkCollision(m1, m2);
                 }
             }
         }
+
+        for (Regionable r : breakList) {
+            getRegionableList().remove(r);
+            repaint();
+        }
     }
 
-    private void checkCollision(Movable m1, Movable m2) {
+    private void checkCollision(Movable m1, Regionable m2) {
         if (m1.getBounds().intersects(m2.getBounds())){
             if (m2.getMinX() < m1.getMinX()  && m1.getMinX() < m2.getMaxX()
                 || m2.getMinX() < m1.getMaxX() && m1.getMaxX() < m2.getMaxX()) {
-                m2.setDx(-m2.getDx());
+
+                if (m2 instanceof Movable){
+                    ((Movable)m2).setDx(-((Movable)m2).getDx());
+                }
+    
                 m1.setDx(-m1.getDx());
             }
     
             if (m2.getMaxY() > m1.getMinY() && m1.getMinY() > m2.getMinY()
                 || m2.getMaxY() > m1.getMaxY() && m1.getMaxY() > m2.getMinY()) {
-                m2.setDy(-m2.getDy());
+
+                if (m2 instanceof Movable){
+                    ((Movable)m2).setDy(-((Movable)m2).getDy());
+                }
+
                 m1.setDy(-m1.getDy());
             }
 
             m1.move();
             plusMoveCount();
-            m2.move();
-            plusMoveCount();
+            
+            if (m2 instanceof Breakable) {
+                breakList.add(m2);
+            } else if (m2 instanceof Movable){
+                ((Movable)m2).move();
+                plusMoveCount();
+            }
+
             repaint();
         }
     }

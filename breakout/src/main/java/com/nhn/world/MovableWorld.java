@@ -9,7 +9,7 @@ public class MovableWorld extends World{
     private int dt;
 
     public MovableWorld() {
-        this(0, 100);
+        this(0, 10);
     }
 
     public MovableWorld(int maxMoveCount, int dt) {
